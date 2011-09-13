@@ -178,6 +178,10 @@ def description_api_page_read(soup, api_id):
     lists = soup.findAll("div", attrs={"class":"span-10"})
     for list in lists:
         #print list.contents[0].contents[0]
+        if isinstance(list, Tag) == False:
+            break
+        if isinstance(list.contents[0], Tag) == False:
+            break
         description = list.contents[0].contents[0].strip()
         if description != "":
             #print description

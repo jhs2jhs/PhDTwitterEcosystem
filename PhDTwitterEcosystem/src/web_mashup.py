@@ -110,7 +110,7 @@ def description_mashup_page_read(soup, mashup_id):
             if jump == 2:
                 break
             if isinstance(l, Tag):
-                if l.contents[0].strip().lower() == "description":
+                if len(l.contents)==0 or l.contents[0].strip().lower() == "description":
                     jump = 1
                 elif jump == 1:
                     jump = 2
