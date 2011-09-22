@@ -8,6 +8,7 @@ import sqlite3
 
 
 sqlite_file_path = "../db/programableweb.db"
+sqlite_analysis_path = "../analysis/"
 
 def db_conn(): 
     conn = sqlite3.connect(sqlite_file_path)
