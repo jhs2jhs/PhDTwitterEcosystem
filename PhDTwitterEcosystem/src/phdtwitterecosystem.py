@@ -11,6 +11,7 @@ import sqlite_init
 import sql_analysis
 import analysis_util
 import analysis_plot
+import sql_gexf
 
 
 
@@ -59,7 +60,12 @@ def programable_sql_analysis():
     #analysis_util.sqlite_function_aggreation_test_o()
 
 
+def get_gexf():
+    sql_gexf.developer_to_api_o()
+
+
 if __name__ == "__main__":
     #programableweb_page_read()
-    programable_sql_analysis()
+    #programable_sql_analysis()
+    get_gexf()
     print "Hello World"
