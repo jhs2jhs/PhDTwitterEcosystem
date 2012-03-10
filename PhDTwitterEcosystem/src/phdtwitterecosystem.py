@@ -12,6 +12,8 @@ import sql_analysis
 import analysis_util
 import analysis_plot
 import sql_gexf
+import analysis_cacm
+import analysis_pioneer_rate
 
 
 
@@ -58,14 +60,52 @@ def programable_sql_analysis():
     #sql_analysis.apis_has_developer_count_o()
     #analysis_util.sqlite_function_create_test_o()
     #analysis_util.sqlite_function_aggreation_test_o()
+    
 
 
 def get_gexf():
     sql_gexf.developer_to_api_o()
 
 
+def analysis_cacm_main():
+    '''analysis_cacm.developer_mashup_api_category_dataformat_o(1)
+    analysis_cacm.developer_mashup_api_category_dataformat_o(19)
+    analysis_cacm.developer_mashup_api_category_dataformat_o(82)
+    analysis_cacm.developer_mashup_api_category_dataformat_o(2720)
+    #
+    analysis_cacm.developer_mashup_o(1)
+    analysis_cacm.developer_mashup_o(19)
+    analysis_cacm.developer_mashup_o(82)
+    analysis_cacm.developer_mashup_o(2720)
+    #'''
+    #analysis_cacm.api_usage_o(2720)
+    #analysis_cacm.developer_api_count_o(2720)
+    #analysis_cacm.developer_api_mashup_count_o(2720)
+    analysis_cacm.api_usage_o(2720, 2)
+    analysis_cacm.api_usage_o(2720, 3)
+    analysis_cacm.api_usage_o(2720, 4)
+    analysis_cacm.api_usage_o(2720, 5)
+    analysis_cacm.api_usage_o(2720, 6)
+    analysis_cacm.api_usage_o(2720, 7)
+    analysis_cacm.api_usage_o(2720, 8)
+    analysis_cacm.api_usage_o(2720, 9)
+    analysis_cacm.api_usage_o(2720, 10)
+    analysis_cacm.api_usage_o(2720, 11)
+    
+    
+    
+def analysis_pioneer_rate_main():
+    analysis_util.pioneer_rate_tmp_table_init()
+    analysis_pioneer_rate.developer_api_time_o()
+    analysis_pioneer_rate.api_developer_index_o()
+    analysis_pioneer_rate.pioneer_rate_o()
+    analysis_pioneer_rate.pioneer_rate_mashups_o()
+
+
 if __name__ == "__main__":
     #programableweb_page_read()
     #programable_sql_analysis()
-    get_gexf()
+    #get_gexf()
+    #analysis_cacm_main()
+    analysis_pioneer_rate_main()
     print "Hello World"

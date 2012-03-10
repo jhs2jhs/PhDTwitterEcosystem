@@ -30,7 +30,7 @@ def db_loop(c, file_name):
         out = str(i)
         for r in row:
             out = out+"\t"+str(r)
-        #print out
+        print out
         txt.write(out+"\n")
         i = i+1
 
@@ -187,6 +187,140 @@ def sqlite_function_aggreation_test_o():
     db_loop(c, "sqlite_function_aggreation_test_o")
 
 ############# sqlite3 self defined function ############# 
+
+
+
+
+
+
+
+
+
+
+
+############# develop pioneer rate ######################
+############# developer_api_pioneer_rate ############# 
+api_author_count_table_dropx = '''
+    DROP TABLE IF EXISTS api_author_count_temp
+'''
+api_author_count_table_create = '''
+    CREATE TABLE api_author_count_temp (
+        id INTEGER PRIMARY KEY,
+        api_id INTEGER NOT NULL ,
+        developer_count INTEGER NOT NULL,
+        mashup_count INTEGER NOT NULL,
+        FOREIGN KEY (api_id) REFERENCES api(api_id)
+    )
+'''
+api_developer_date_table_dropx = '''
+    DROP TABLE IF EXISTS api_developer_date_temp
+'''
+api_developer_date_table_create = '''
+    CREATE TABLE api_developer_date_temp (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        api_id INTEGER NOT NULL ,
+        mashup_id INTEGER NOT NULL, 
+        developer_id INTEGER NOT NULL,
+        date INTEGER NOT NULL,
+        FOREIGN KEY (developer_id) REFERENCES author(author_id),
+        FOREIGN KEY (api_id) REFERENCES api(api_id),
+        FOREIGN KEY (mashup_id) REFERENCES mashup(mashup_id)
+    )
+'''
+developer_api_pioneer_rate_table_dropx = '''
+    DROP TABLE IF EXISTS developer_api_pioneer_rate_temp
+'''
+developer_api_pioneer_rate_table_create = '''
+    CREATE TABLE developer_api_pioneer_rate_temp (
+        id INTEGER PRIMARY KEY,
+        developer_id INTEGER NOT NULL ,
+        api_id INTEGER NOT NULL,
+        pioneer_position INTEGER NOT NULL,
+        mashup_counts INTEGER NOT NULL, 
+        FOREIGN KEY (developer_id) REFERENCES author(author_id),
+        FOREIGN KEY (api_id) REFERENCES api(api_id),
+        UNIQUE (developer_id, api_id)
+    )
+'''
+developer_api_pioneer_rate_mashups_table_dropx = '''
+    DROP TABLE IF EXISTS developer_api_pioneer_rate_mashups_temp
+'''
+developer_api_pioneer_rate_mashups_table_create = '''
+    CREATE TABLE developer_api_pioneer_rate_mashups_temp (
+        id INTEGER PRIMARY KEY,
+        developer_id INTEGER NOT NULL ,
+        api_id INTEGER NOT NULL,
+        mashup_counts INTEGER NOT NULL, 
+        pioneer_position_rate REAL NOT NULL,
+        pioneer_mashup_rate REAL NOT NULL,
+        FOREIGN KEY (developer_id) REFERENCES author(author_id),
+        FOREIGN KEY (api_id) REFERENCES api(api_id),
+        UNIQUE (developer_id, api_id)
+    )
+'''
+def pioneer_rate_tmp_table_init():
+    global conn
+    c = conn.cursor()
+    #
+    c.execute(api_author_count_table_dropx, )
+    conn.commit()
+    c.execute(api_author_count_table_create, )
+    conn.commit()
+    #
+    c.execute(api_developer_date_table_dropx, )
+    conn.commit()
+    c.execute(api_developer_date_table_create, )
+    conn.commit()
+    #
+    c.execute(developer_api_pioneer_rate_table_dropx, )
+    conn.commit()
+    c.execute(developer_api_pioneer_rate_table_create, )
+    conn.commit()
+    #
+    c.execute(developer_api_pioneer_rate_mashups_table_dropx, )
+    conn.commit()
+    c.execute(developer_api_pioneer_rate_mashups_table_create, )
+    conn.commit()
+    print "init finish"
+    
+api_author_count_table_update = '''
+    INSERT OR IGNORE INTO api_author_count_temp (api_id, developer_count, mashup_count) VALUES (?, ?, ?)
+'''
+def api_author_count_tmp_table_update(api_id, developer_count, mashup_count):
+    global conn
+    c = conn.cursor()
+    c.execute(api_author_count_table_update, (api_id, developer_count, mashup_count, ))
+    #print developer_count
+    conn.commit()
+api_developer_date_table_update = '''
+    INSERT OR IGNORE INTO api_developer_date_temp (api_id, mashup_id, developer_id, date) VALUES (?, ?, ?, ?)
+'''
+def api_developer_date_tmp_table_update(api_id, mashup_id, developer_id, datestring):
+    global conn
+    c = conn.cursor()
+    c.execute(api_developer_date_table_update, (api_id, mashup_id, developer_id, datestring, ))
+    #print "cool: "+str(datestring)
+    conn.commit()
+developer_api_pioneer_rate_table_update = '''
+    INSERT OR IGNORE INTO developer_api_pioneer_rate_temp (developer_id, api_id, pioneer_position, mashup_counts) VALUES (?, ?, ?, ?)
+'''
+def developer_api_pioneer_rate_tmp_table_update(developer_id, api_id, pioneer_position, mashup_counts):
+    global conn
+    c = conn.cursor()
+    c.execute(developer_api_pioneer_rate_table_update, (developer_id, api_id, pioneer_position, mashup_counts, ))
+    #print "cool: "+str(mashup_counts)
+    conn.commit()
+developer_api_pioneer_rate_mashups_table_update = '''
+    INSERT OR IGNORE INTO developer_api_pioneer_rate_mashups_temp (developer_id, api_id, mashup_counts, pioneer_position_rate, pioneer_mashup_rate) VALUES (?, ?, ?, ?, ?)
+'''
+def developer_api_pioneer_rate_mashups_tmp_table_update(developer_id, api_id, mashup_counts, pioneer_position_rate, pioneer_mashup_rate):
+    global conn
+    c = conn.cursor()
+    c.execute(developer_api_pioneer_rate_mashups_table_update, (developer_id, api_id, mashup_counts, pioneer_position_rate, pioneer_mashup_rate, ))
+    #print "cool: "+str(mashup_counts)
+    conn.commit()
+############# develop pioneer rate ######################
+
 
 
 if __name__ == "__main__":
